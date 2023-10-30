@@ -33,8 +33,6 @@ SelectionWidget::SelectionWidget(QColor c, QWidget* parent)
     });
 
     int sideVal = GlobalValues::buttonBaseSize() * 0.6;
-    // MODIFIED: hide handles
-    sideVal = 0;
     int handleSide = sideVal / 2;
     const QRect areaRect(0, 0, sideVal, sideVal);
 
@@ -381,6 +379,8 @@ void SelectionWidget::parentMouseMoveEvent(QMouseEvent* e)
 
 void SelectionWidget::paintEvent(QPaintEvent*)
 {
+    // MODIFIED: hide handles
+    m_color = QColor("transparent");
     QPainter p(this);
     p.setPen(m_color);
     p.drawRect(rect() + QMargins(0, 0, -1, -1));
