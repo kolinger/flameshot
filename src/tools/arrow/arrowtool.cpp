@@ -5,8 +5,11 @@
 #include <cmath>
 
 namespace {
-const int ArrowWidth = 10;
-const int ArrowHeight = 18;
+// MODIFIED: make arrow head smaller
+//const int ArrowWidth = 10;
+//const int ArrowHeight = 18;
+const int ArrowWidth = 4;
+const int ArrowHeight = 10;
 
 QPainterPath getArrowHead(QPoint p1, QPoint p2, const int thickness)
 {
