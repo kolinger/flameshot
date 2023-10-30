@@ -1619,14 +1619,18 @@ void CaptureWidget::updateCursor()
         setCursor(Qt::ArrowCursor);
     } else if (m_activeButton != nullptr &&
                activeButtonToolType() != CaptureTool::TYPE_MOVESELECTION) {
-        setCursor(Qt::CrossCursor);
+        // MODIFIED: cursor
+        //setCursor(Qt::CrossCursor);
+        setCursor(Qt::ArrowCursor);
     } else if (m_selection->getMouseSide(mapFromGlobal(QCursor::pos())) !=
                SelectionWidget::NO_SIDE) {
         setCursor(m_selection->cursor());
     } else if (activeButtonToolType() == CaptureTool::TYPE_MOVESELECTION) {
         setCursor(Qt::OpenHandCursor);
     } else {
-        setCursor(Qt::CrossCursor);
+        // MODIFIED: cursor
+        //setCursor(Qt::CrossCursor);
+        setCursor(Qt::ArrowCursor);
     }
 }
 
