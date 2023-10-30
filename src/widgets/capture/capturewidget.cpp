@@ -545,13 +545,20 @@ void CaptureWidget::paintEvent(QPaintEvent* paintEvent)
         save = true;
     }
     painter.drawPixmap(0, 0, m_context.screenshot);
+    // MODIFIED: addition
+    if (dimensionRect) {
+        delete dimensionRect;
+        dimensionRect = nullptr;
+    }
     if (m_selection && m_xywhDisplay) {
         const QRect& selection = m_selection->geometry().normalized();
         const qreal scale = m_context.screenshot.devicePixelRatio();
         QRect xybox;
         QFontMetrics fm = painter.fontMetrics();
 
-        QString xy = QString("%1x%2+%3+%4")
+        // MODIFIED: xy format override
+        // QString xy = QString("%1x%2+%3+%4")
+        QString xy = QString("%1x%2 [x:%3, y:%4]")
                        .arg(static_cast<int>(selection.width() * scale))
                        .arg(static_cast<int>(selection.height() * scale))
                        .arg(static_cast<int>(selection.left() * scale))
@@ -589,9 +596,15 @@ void CaptureWidget::paintEvent(QPaintEvent* paintEvent)
                 y0 =
                   selection.top() + (selection.height() - xybox.height()) / 2;
         }
+        // MODIFIED: additions (move outside, helper variables)
+        //x0 -= xybox.width();
+        y0 -= xybox.height();
+        dimensionRect = new QRect(x0, y0, xybox.width(), xybox.height());
 
-        QColor uicolor = ConfigHandler().uiColor();
-        uicolor.setAlpha(200);
+        // MODIFIED: uicolor override
+        // QColor uicolor = ConfigHandler().uiColor();
+        // uicolor.setAlpha(200);
+        QColor uicolor = Qt::black;
         painter.fillRect(
           x0, y0, xybox.width(), xybox.height(), QBrush(uicolor));
         painter.setPen(ColorUtils::colorIsDark(uicolor) ? Qt::white
@@ -1924,6 +1937,11 @@ void CaptureWidget::drawInactiveRegion(QPainter* painter)
     }
     QRegion grey(rect());
     grey = grey.subtracted(r);
+
+    // MODIFIED: extra subtraction
+    if (dimensionRect) {
+        grey = grey.subtracted(*dimensionRect);
+    }
 
     painter->setClipRegion(grey);
     painter->drawRect(-1, -1, rect().width() + 1, rect().height() + 1);

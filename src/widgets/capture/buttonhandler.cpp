@@ -279,6 +279,10 @@ void ButtonHandler::updateBlockedSides()
     m_horizontalyBlocked = (m_blockedRight && m_blockedLeft);
     m_allSidesBlocked =
       (m_blockedBotton && m_horizontalyBlocked && m_blockedTop);
+
+    // MODIFIED: disallow top and left buttons
+    m_blockedTop = true;
+    //m_blockedLeft = true;
 }
 
 void ButtonHandler::expandSelection()

@@ -222,4 +222,7 @@ private:
     // Grid
     bool m_displayGrid{ false };
     int m_gridSize{ 10 };
+
+    // MODIFIED: custom variables
+    QRect *dimensionRect = nullptr;
 };
