@@ -3,6 +3,7 @@
 
 #include "screenshotsaver.h"
 #include "abstractlogger.h"
+#include "qfileinfo.h"
 #include "src/core/flameshot.h"
 #include "src/core/flameshotdaemon.h"
 #include "src/utils/confighandler.h"
@@ -211,8 +212,10 @@ bool saveToFilesystemGUI(const QPixmap& capture)
     }
 
     if (okay) {
-        QString pathNoFile =
-          savePath.left(savePath.lastIndexOf(QDir::separator()));
+        // MODIFIED: fixed invalid pathNoFile including file name
+        //QString pathNoFile =
+        //  savePath.left(savePath.lastIndexOf(QDir::separator()));
+        QString pathNoFile = QFileInfo(savePath).absoluteDir().absolutePath();
 
         ConfigHandler().setSavePath(pathNoFile);
 
