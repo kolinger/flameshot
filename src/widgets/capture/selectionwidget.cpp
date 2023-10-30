@@ -379,16 +379,15 @@ void SelectionWidget::parentMouseMoveEvent(QMouseEvent* e)
 
 void SelectionWidget::paintEvent(QPaintEvent*)
 {
-    // MODIFIED: hide handles
-    m_color = QColor("transparent");
     QPainter p(this);
     p.setPen(m_color);
     p.drawRect(rect() + QMargins(0, 0, -1, -1));
     p.setRenderHint(QPainter::Antialiasing);
     p.setBrush(m_color);
-    for (auto rectangle : handlerAreas()) {
-        p.drawEllipse(rectangle);
-    }
+    // MODIFIED: hide handles
+    //for (auto rectangle : handlerAreas()) {
+    //    p.drawEllipse(rectangle);
+    //}
 }
 
 void SelectionWidget::resizeEvent(QResizeEvent*)
